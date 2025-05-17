@@ -1,0 +1,30 @@
+import shutil
+
+# Define destination directory for the website structure
+site_root = "/mnt/data/chobikabbo_site"
+images_src = "/mnt/data/website_files"
+images_dest = os.path.join(site_root, "images")
+
+# Create necessary folders
+os.makedirs(images_dest, exist_ok=True)
+
+# Copy images to the new site folder under "images"
+image_extensions = (".png", ".jpg", ".jpeg", ".gif")
+for root, dirs, files in os.walk(images_src):
+    for file in files:
+        if file.lower().endswith(image_extensions):
+            full_path = os.path.join(root, file)
+            shutil.copy(full_path, os.path.join(images_dest, file))
+
+# Save the HTML file
+html_path = os.path.join(site_root, "index.html")
+with open(html_path, "w", encoding="utf-8") as f:
+    f.write(textdoc["content"])
+
+# List final website folder structure
+final_files = []
+for root, dirs, files in os.walk(site_root):
+    for file in files:
+        final_files.append(os.path.relpath(os.path.join(root, file), site_root))
+
+final_files[:10]
